@@ -1,0 +1,25 @@
+### Recuperar todas las tasks
+GET http://localhost:1235/tasks
+
+### Crear una task con POST
+POST http://localhost:1235/tasks
+Content-Type: application/json
+
+{
+  "title": "Paseo",
+  "description": "Tengo que pasear a Pepper",
+  "completed": false
+}
+
+### Actualizar una task
+PATCH http://localhost:1235/tasks/64e52d523ed65ce698d9ff4b
+Content-Type: application/json
+
+{
+  "title":  "Ir al manejar",
+  "description": "Tengo que practicar manejo"
+}
+
+### Eliminar task
+DELETE http://localhost:1235/tasks/64e52afc3ed65ce698d9ff41
+Content-Type: application/json
