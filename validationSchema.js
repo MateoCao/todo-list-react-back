@@ -6,7 +6,9 @@ const taskSchema = z.object({
     required_error: 'Task title is required'
   }).min(5),
   description: z.string().min(10).max(100),
-  completed: z.boolean()
+  completed: z.boolean(),
+  date: z.string().min(10),
+  expired: z.boolean()
 })
 
 export function validateTask (task) {
