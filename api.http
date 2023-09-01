@@ -23,3 +23,6 @@ Content-Type: application/json
 ### Eliminar task
 DELETE http://localhost:1235/tasks/64e52afc3ed65ce698d9ff41
 Content-Type: application/json
+
+### Register
+POST http://localhost:1235/user/register

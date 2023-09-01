@@ -1,25 +1,18 @@
 import express, { json } from 'express'
+import cookieParser from 'cookie-parser'
 import { tasksRouter } from './routes/tasks.js'
+import { authRouter } from './routes/auth.js'
 import { corsMiddleware } from './middlewares/cors.js'
-import { mongoose } from 'mongoose'
 import 'dotenv/config'
 
 const app = express()
 app.use(json())
 app.disable('x-powered-by')
+app.use(cookieParser())
 
 app.use(corsMiddleware())
 
 app.use('/tasks', tasksRouter)
+app.use('/user', authRouter)
 
-const PORT = process.env.PORT ?? 1235
-
-mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.pbjm7vt.mongodb.net/todolist-API?retryWrites=true&w=majority`)
-  .then(() => {
-    console.log('Connected to database')
-    app.listen(PORT, () => {
-      console.log(`server listening on port http://localhost:${PORT}`)
-    })
-  }).catch((error) => {
-    console.log(error)
-  })
+export default app
