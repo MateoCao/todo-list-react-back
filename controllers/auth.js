@@ -26,7 +26,10 @@ export class AuthController {
       const newUser = await AuthModel.register({ user: result, passwordHash: passwordEncrypted })
       const token = await createAccessToken({ payload: newUser._id })
 
-      res.cookie('token', token)
+      res.cookie('token', token, {
+        sameSite: 'none',
+        secure: true
+      })
       res.status(201).json({
         id: newUser._id,
         username: newUser.username,
@@ -55,7 +58,10 @@ export class AuthController {
 
       const token = await createAccessToken({ id: userFound._id })
 
-      res.cookie('token', token)
+      res.cookie('token', token, {
+        sameSite: 'none',
+        secure: true
+      })
       res.status(201).json({
         id: userFound._id,
         username: userFound.username,
