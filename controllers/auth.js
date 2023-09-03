@@ -27,9 +27,7 @@ export class AuthController {
       const token = await createAccessToken({ payload: newUser._id })
 
       res.cookie('token', token, {
-        domain: 'todo-list-le4v-dev.fl0.io',
-        path: '/',
-        maxAge: 24 * 60 * 60 * 1000,
+        domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
         secure: true
       })
@@ -62,9 +60,7 @@ export class AuthController {
       const token = await createAccessToken({ id: userFound._id })
 
       res.cookie('token', token, {
-        domain: 'todo-list-le4v-dev.fl0.io',
-        path: '/',
-        maxAge: 24 * 60 * 60 * 1000,
+        domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
         secure: true
       })
