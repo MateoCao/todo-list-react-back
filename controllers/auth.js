@@ -29,7 +29,8 @@ export class AuthController {
       res.cookie('token', token, {
         domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
-        secure: true
+        secure: true,
+        path: '/'
       })
       res.status(201).json({
         id: newUser._id,
@@ -62,7 +63,8 @@ export class AuthController {
       res.cookie('token', token, {
         domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
-        secure: true
+        secure: true,
+        path: '/'
       })
       res.status(201).json({
         id: userFound._id,
