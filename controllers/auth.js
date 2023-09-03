@@ -30,6 +30,7 @@ export class AuthController {
         domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
         secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
         path: '/'
       })
       res.status(201).json({
@@ -64,6 +65,7 @@ export class AuthController {
         domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
         secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
         path: '/'
       })
       res.status(201).json({
