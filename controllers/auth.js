@@ -25,13 +25,16 @@ export class AuthController {
 
       const newUser = await AuthModel.register({ user: result, passwordHash: passwordEncrypted })
       const token = await createAccessToken({ payload: newUser._id })
+      console.log(token)
 
       res.cookie('token', token, {
         domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
-        path: '/'
+        path: '/',
+        expires: true,
+        httpOnly: true
       })
       res.status(201).json({
         id: newUser._id,
@@ -60,13 +63,16 @@ export class AuthController {
       if (!isMatched) return res.status(400).json(['Contraseña incorrecta'])
 
       const token = await createAccessToken({ id: userFound._id })
+      console.log('<<<<<<<<<<<<< Login: token:', token)
 
       res.cookie('token', token, {
         domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
-        path: '/'
+        path: '/',
+        expires: true,
+        httpOnly: true
       })
       res.status(201).json({
         id: userFound._id,
@@ -107,16 +113,20 @@ export class AuthController {
   }
 
   static async verifyToken (req, res) {
+    console.log('<<<<<<<<<< Verify-Token (ANTES) cookies, token:', req.cookies, req.cookies.token)
     const { token } = req.cookies
-    console.log(token)
+    console.log('<<<<<<<<<<<<< Verify-Token (DESPUES) token:', token)
     if (!token) return res.status(401).json(['No autorizado'])
 
     jwt.verify(token, process.env.SECRET_TOKEN, async (err, user) => {
+      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) token:', token)
+      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) err:', err)
       if (err) return res.status(401).json(['No autorizado'])
+      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) user:', user)
       const id = user.id ? user.id : user.payload
-      console.log(user.payload)
+      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) userId:', user.id, user.payload)
       const userFound = await AuthModel.verifyToken({ _id: id })
-      console.log(userFound)
+      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) userFound:', user.id, user.payload)
       if (!userFound) return res.status(401).json(['No autorizado'])
 
       return res.json({
