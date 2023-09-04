@@ -9,6 +9,7 @@ const app = express()
 app.use(json())
 app.disable('x-powered-by')
 app.use(cookieParser())
+app.set('trust proxy', 1)
 
 app.use(corsMiddleware())
 
