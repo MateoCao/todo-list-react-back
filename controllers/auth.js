@@ -28,13 +28,11 @@ export class AuthController {
       console.log(token)
 
       res.cookie('token', token, {
-        domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
         path: '/',
-        expires: true,
-        httpOnly: true
+        expires: true
       })
       res.status(201).json({
         id: newUser._id,
@@ -66,13 +64,11 @@ export class AuthController {
       console.log('<<<<<<<<<<<<< Login: token:', token)
 
       res.cookie('token', token, {
-        domain: 'main--effortless-custard-7e0ce8.netlify.app',
         sameSite: 'none',
         secure: true,
         maxAge: 24 * 60 * 60 * 1000,
         path: '/',
-        expires: true,
-        httpOnly: true
+        expires: true
       })
       res.status(201).json({
         id: userFound._id,
@@ -132,7 +128,8 @@ export class AuthController {
       return res.json({
         id: userFound._id,
         username: userFound.username,
-        email: userFound.email
+        email: userFound.email,
+        userToken: token
       })
     })
   }
