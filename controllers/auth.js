@@ -109,21 +109,22 @@ export class AuthController {
   }
 
   static async verifyToken (req, res) {
-    console.log('<<<<<<<<<< Verify-Token (ANTES) cookies, token:', req.cookies, req.cookies.token)
     const { token } = req.cookies
-    console.log('<<<<<<<<<<<<< Verify-Token (DESPUES) token:', token)
     if (!token) return res.status(401).json(['No autorizado'])
 
     jwt.verify(token, process.env.SECRET_TOKEN, async (err, user) => {
-      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) token:', token)
-      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) err:', err)
       if (err) return res.status(401).json(['No autorizado'])
-      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) user:', user)
       const id = user.id ? user.id : user.payload
-      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) userId:', user.id, user.payload)
       const userFound = await AuthModel.verifyToken({ _id: id })
-      console.log('<<<<<<<<<<<<< Verify-Token (VERIFY jwt) userFound:', user.id, user.payload)
       if (!userFound) return res.status(401).json(['No autorizado'])
+
+      res.cookie('token', token, {
+        sameSite: 'none',
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        path: '/',
+        expires: true
+      })
 
       return res.json({
         id: userFound._id,
